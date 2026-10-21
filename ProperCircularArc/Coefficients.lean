@@ -5,6 +5,7 @@ import Mathlib.Data.Finset.Max
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
+import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 
 /-!
 # The coefficients `A(y ∣ σ)`
@@ -188,5 +189,28 @@ lemma card_Tset (s : Finset ℕ) (h0 : 0 ∉ s) : (Tset s).card = (Zset s).card 
     simp_rw [key]
     rw [tel, hf0, hfn]; norm_num
   omega
+
+/-- The entries of the tableau matrices `M_k` are nonnegative. -/
+lemma Acoef_nonneg (y : ℕ) (s : Finset ℕ) : 0 ≤ Acoef y s := by
+  unfold Acoef
+  split_ifs with h
+  · have hy := pos_of_mem_Tset h
+    have hys := not_mem_of_mem_Tset h
+    refine mul_nonneg ?_ (prod_nonneg fun t ht => ?_)
+    · unfold cfac
+      split_ifs with h1
+      · norm_num
+      · have : (2 : ℚ) ≤ y := by exact_mod_cast (show 2 ≤ y by omega)
+        exact div_nonneg (by linarith) (by linarith)
+    · have hts : t ∈ s := (mem_erase.1 ht).2
+      have hty : t ≠ y - 1 := (mem_erase.1 ht).1
+      have hne : t ≠ y := fun e => hys (e ▸ hts)
+      rcases lt_or_gt_of_ne hne with hlt | hgt
+      · have : t + 1 < y := by omega
+        have h1 : (t : ℚ) + 1 < y := by exact_mod_cast this
+        exact div_nonneg (by linarith) (by linarith)
+      · have h1 : (y : ℚ) < t := by exact_mod_cast hgt
+        exact div_nonneg_of_nonpos (by linarith) (by linarith)
+  · exact le_rfl
 
 end ProperCircularArc
