@@ -1,3 +1,12 @@
 import ProperCircularArc.Laurent
 import ProperCircularArc.Coefficients
 import ProperCircularArc.Color
+import ProperCircularArc.Tableau
+import ProperCircularArc.ScalarIdentities
+import ProperCircularArc.TableauIdentities
+import ProperCircularArc.Block
+import ProperCircularArc.Rank
+import ProperCircularArc.PowerSum
+import ProperCircularArc.Construction
+import ProperCircularArc.Span
+import ProperCircularArc.Intertwine

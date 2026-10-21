@@ -242,4 +242,166 @@ lemma rk_free_cons {k : ℕ} {w : Idx (k + 1)} {y : ℕ} (hv : Valid (snoc w y))
       have hjw : j ∉ entries w := fun h => by have := hle j h; omega
       rw [digit_cons_of_not_mem hjw (by omega), digit_snoc_of_not_mem hjw (by omega)]
 
+/-! ## Ranks of the `R`-columns in the rank-span -/
+
+/-- `r(a, w) < r(w, y)` whenever `a ∉ w` and `a + 1 ∈ w ∪ {y}`. -/
+lemma rk_cons_lt {k : ℕ} {w : Idx (k + 1)} {y a : ℕ} (hv : Valid (snoc w y))
+    (ha : a ∉ entries w) (ha1 : 1 ≤ a) (hay : a + 1 ∈ entries w ∨ a + 1 = y) :
+    rk (cons a w) < rk (snoc w y) := by
+  obtain ⟨hw, hyw, hy1⟩ := valid_of_snoc hv
+  have hvc : Valid (cons a w) := valid_cons hw ha ha1
+  have hne : (entries w).Nonempty := ⟨w 0, mem_entries.2 ⟨0, rfl⟩⟩
+  set m := (entries w).max' hne
+  have hm : m ∈ entries w := max'_mem _ _
+  have hle : ∀ t ∈ entries w, t ≤ m := fun t ht => le_max' _ _ ht
+  have hym : y ≠ m := fun e => hyw (e ▸ hm)
+  by_cases hA : y ∉ Tset (entries w) ∧ m < y
+  · obtain ⟨hyT, hmy⟩ := hA
+    have hay' : a < y := by
+      rcases hay with h | h
+      · have := hle _ h; omega
+      · omega
+    refine rk_lt hvc.1 y ?_ ?_
+    · rw [digit_cons_of_not_mem hyw (by omega), digit_snoc_last hv.1, if_neg hyT]
+      omega
+    · intro j hj
+      have hjw : j ∉ entries w := fun h => by have := hle j h; omega
+      rw [digit_cons_of_not_mem hjw (by omega), digit_snoc_of_not_mem hjw (by omega)]
+  · have ham : a < m := by
+      rcases hay with h | h
+      · have := hle _ h; omega
+      · subst h
+        by_contra hge
+        push Not at hge
+        apply hA
+        refine ⟨fun hT => ?_, by omega⟩
+        rcases (mem_Tset.1 hT).2 with h | ⟨_, h⟩
+        · omega
+        · exact ha (by simpa using h)
+    obtain ⟨s, hs⟩ := mem_entries.1 hm
+    refine rk_lt hvc.1 m ?_ ?_
+    · rw [← hs, digit_snoc_of_lt hv.1]
+      have := digit_cons_tail_le hvc.1 s
+      omega
+    · intro j hj
+      have hjw : j ∉ entries w := fun h => by have := hle j h; omega
+      rw [digit_cons_of_not_mem hjw (by omega)]
+      by_cases hjy : j = y
+      · subst hjy
+        rw [digit_snoc_last hv.1]
+        have : j ∈ Tset (entries w) := by
+          by_contra hT; exact hA ⟨hT, hj⟩
+        rw [if_pos this]
+      · rw [digit_snoc_of_not_mem hjw hjy]
+
+lemma tail_eq_cons {k : ℕ} (w : Idx (k + 1)) : w = cons (w 0) (Fin.tail w) := (cons_eq_self w).symm
+
+/-- `r(τ_1(a, w)) < r(w, y)` whenever `a ∉ w`, `a + 1 ∈ w ∪ {y}` and `a + 1 ≠ w_1`. -/
+lemma rk_swap_lt {k : ℕ} {w : Idx (k + 1)} {y a : ℕ} (hv : Valid (snoc w y))
+    (ha : a ∉ entries w) (ha1 : 1 ≤ a) (hay : a + 1 ∈ entries w ∨ a + 1 = y) (ha0 : a + 1 ≠ w 0) :
+    rk (cons (w 0) (cons a (Fin.tail w))) < rk (snoc w y) := by
+  obtain ⟨hw, hyw, hy1⟩ := valid_of_snoc hv
+  have hvc : Valid (cons a w) := valid_cons hw ha ha1
+  set τ := cons (w 0) (cons a (Fin.tail w))
+  have hτ : Valid τ := by
+    have := valid_comp_perm hvc (swapPerm (k + 2) 0)
+    have e : cons a w ∘ swapPerm (k + 2) 0 = τ := by
+      conv_lhs => rw [tail_eq_cons w]
+      funext i
+      rw [Function.comp_apply, swapPerm_zero_two]
+      refine Fin.cases ?_ (fun j => ?_) i
+      · rw [Equiv.swap_apply_left, show (1 : Fin (k + 2)) = Fin.succ 0 from rfl]; simp [τ]
+      · refine Fin.cases ?_ (fun l => ?_) j
+        · rw [show (Fin.succ (0 : Fin (k + 1))) = (1 : Fin (k + 2)) from rfl,
+            Equiv.swap_apply_right]; simp [τ]
+        · rw [Equiv.swap_apply_of_ne_of_ne (by simp [Fin.ext_iff]) (by simp [Fin.ext_iff])]
+          simp [τ, Fin.tail]
+    rwa [e] at this
+  -- digits of `τ`
+  have hd0 : digit τ (w 0) = digit (snoc w y) (w 0) := by
+    have h1 := digit_eq_wt hτ.1 0
+    have h2 := digit_snoc_of_lt hv.1 0
+    simp only [τ, cons_zero'] at h1
+    rw [h1, h2, wt]; simp
+  have hdi : ∀ i : Fin k, digit τ (w i.succ) < digit (snoc w y) (w i.succ) := by
+    intro i
+    have h1 := digit_eq_wt hτ.1 i.succ.succ
+    simp only [τ, cons_succ'] at h1
+    rw [show Fin.tail w i = w i.succ from rfl] at h1
+    rw [h1, digit_snoc_of_lt hv.1, wt]
+    split_ifs with h <;> simp at h ⊢ <;> omega
+  have hda : digit τ a ≤ k + 1 := by
+    have h1 := digit_eq_wt hτ.1 (1 : Fin (k + 2))
+    rw [show (1 : Fin (k + 2)) = Fin.succ 0 from rfl] at h1
+    simp only [τ, cons_succ', cons_zero'] at h1
+    rw [h1, wt]; split_ifs <;> simp <;> omega
+  have hτentries : ∀ j, j ∈ entries τ ↔ j = w 0 ∨ j = a ∨ ∃ i : Fin k, w i.succ = j := by
+    intro j
+    rw [show entries τ = insert (w 0) (insert a (entries (Fin.tail w))) by
+      simp [τ, entries_cons]]
+    simp [mem_entries, Fin.tail]
+  -- the candidates where the digit of `snoc w y` exceeds that of `τ`
+  let Cw : Finset ℕ := univ.image (fun i : Fin k => w i.succ)
+  let C : Finset ℕ := Cw ∪ (if y ∉ Tset (entries w) then {y} else ∅)
+  have haC : a + 1 ∈ C := by
+    rcases hay with h | h
+    · obtain ⟨i, hi⟩ := mem_entries.1 h
+      refine mem_union_left _ (mem_image.2 ⟨Fin.pred i (fun e => ha0 (by rw [← hi, e])), mem_univ _,
+        by rw [Fin.succ_pred]; exact hi⟩)
+    · have hyT : y ∉ Tset (entries w) := fun hT => by
+        rcases (mem_Tset.1 hT).2 with h' | ⟨_, h'⟩
+        · omega
+        · exact ha (by rw [← h] at h'; simpa using h')
+      exact mem_union_right _ (by rw [if_pos hyT]; exact mem_singleton.2 h)
+  have hCne : C.Nonempty := ⟨_, haC⟩
+  set M := C.max' hCne
+  have hMC : M ∈ C := max'_mem _ _
+  have hleC : ∀ t ∈ C, t ≤ M := fun t ht => le_max' _ _ ht
+  have haM : a < M := by have := hleC _ haC; omega
+  -- digits above `M` agree
+  have hhi : ∀ j, M < j → digit τ j = digit (snoc w y) j := by
+    intro j hj
+    by_cases hj0 : j = w 0
+    · subst hj0; exact hd0
+    have hjτ : j ∉ entries τ := by
+      rw [hτentries]
+      rintro (h | h | ⟨i, hi⟩)
+      · exact hj0 h
+      · omega
+      · have := hleC j (mem_union_left _ (mem_image.2 ⟨i, mem_univ _, hi⟩)); omega
+    rw [digit_eq_zero hjτ]
+    by_cases hjy : j = y
+    · subst hjy
+      rw [digit_snoc_last hv.1]
+      by_cases hT : j ∈ Tset (entries w)
+      · rw [if_pos hT]
+      · exfalso
+        have := hleC j (mem_union_right _ (by rw [if_pos hT]; exact mem_singleton_self _))
+        omega
+    · have hjw : j ∉ entries w := by
+        intro h
+        obtain ⟨i, hi⟩ := mem_entries.1 h
+        rcases Fin.eq_zero_or_eq_succ i with h0 | ⟨i', hi'⟩
+        · exact hj0 (by rw [← hi, h0])
+        · have := hleC j (mem_union_left _ (mem_image.2 ⟨i', mem_univ _, by rw [← hi, hi']⟩))
+          omega
+      rw [digit_snoc_of_not_mem hjw hjy]
+  refine rk_lt hτ.1 M ?_ hhi
+  rcases mem_union.1 hMC with h | h
+  · obtain ⟨i, _, hi⟩ := mem_image.1 h
+    rw [← hi]; exact hdi i
+  · by_cases hyT : y ∉ Tset (entries w)
+    · rw [if_pos hyT] at h
+      have hMy : M = y := mem_singleton.1 h
+      have hyτ : y ∉ entries τ := by
+        rw [hτentries]
+        rintro (h' | h' | ⟨i, hi⟩)
+        · exact hyw (by rw [h']; exact mem_entries.2 ⟨0, rfl⟩)
+        · omega
+        · exact hyw (by rw [← hi]; exact mem_entries.2 ⟨_, rfl⟩)
+      rw [hMy, digit_eq_zero hyτ, digit_snoc_last hv.1, if_neg hyT]
+      omega
+    · rw [if_neg hyT] at h
+      simp at h
+
 end ProperCircularArc
