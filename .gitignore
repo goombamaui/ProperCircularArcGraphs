@@ -1,0 +1,8 @@
+.lake/
+*.olean
+*.ilean
+*.trace
+.DS_Store
+paper/*.aux
+paper/*.log
+paper/*.out
