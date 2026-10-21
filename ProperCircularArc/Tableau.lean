@@ -235,6 +235,9 @@ lemma valid_comp_perm {n : ℕ} {σ : Idx n} (h : Valid σ) (π : Equiv.Perm (Fi
     Valid (σ ∘ π) :=
   ⟨h.1.comp π.injective, fun i => h.2 _⟩
 
+lemma snoc_cons_comm {n : ℕ} (a : ℕ) (w : Idx n) (y : ℕ) :
+    snoc (cons a w) y = cons a (snoc w y) := (Fin.cons_snoc_eq_snoc_cons _ _ _).symm
+
 lemma tail_snoc_cons {n : ℕ} (a : ℕ) (w : Idx n) (y : ℕ) :
     Fin.tail (snoc (cons a w) y) = snoc w y := by
   rw [show snoc (cons a w) y = cons a (snoc w y) from (Fin.cons_snoc_eq_snoc_cons _ _ _).symm]
