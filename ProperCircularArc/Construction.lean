@@ -248,4 +248,77 @@ theorem U_M (k : ℕ) (σ : Idx k) : Ul (k + 1) (Mop k (bv σ)) = Mh k (U k σ) 
   rw [blockSolve (entries σ) h0]
   rfl
 
+/-! ## Equation (R) -/
+
+lemma Acoef_succ_singleton {a : ℕ} (ha : 1 ≤ a) : Acoef (a + 1) {a} = ((a : ℚ) + 1) / a := by
+  have hT : a + 1 ∈ Tset {a} := by rw [mem_Tset]; simp
+  rw [Acoef_of_mem hT, show ({a} : Finset ℕ).erase (a + 1 - 1) = ∅ by simp, prod_empty, mul_one,
+    cfac, if_neg (by omega)]
+  congr 1 <;> push_cast <;> ring
+
+lemma U_cons_eq {k : ℕ} (a : ℕ) (w : Idx (k + 1)) :
+    Uwy k (U (k + 1)) (Fin.init (cons a w)) (cons a w (Fin.last (k + 1))) = U (k + 2) (cons a w) :=
+  rfl
+
+/-- **Equation (R)**: `U_k R_k = R̂_k U_k`. -/
+theorem U_R (k : ℕ) (σ : Idx (k + 1)) : Ul (k + 1) (Rop k (bv σ)) = Rh k (U (k + 1) σ) := by
+  by_cases hσ : Valid σ
+  swap
+  · rw [Rop_bv_invalid hσ, map_zero, U_invalid hσ, map_zero]
+  rw [← cons_eq_self σ] at hσ ⊢
+  set a := σ 0
+  set w := Fin.tail σ
+  obtain ⟨hw, ha, ha1⟩ := valid_of_cons hσ
+  rw [Rop_cons hσ]
+  rcases k with _ | k
+  · -- level one
+    rw [entries_zero, Tset_empty, sum_singleton, Acoef_one_empty, insert_empty_eq a,
+      Acoef_succ_singleton ha1]
+    simp only [map_smul, map_sub, Ul_bv, Rh_zero]
+    have h1 : snoc w 1 0 = 1 := snoc_last' w 1
+    have h2 : snoc w (a + 1) 0 = a + 1 := snoc_last' w (a + 1)
+    simp only [U, h1, h2, cons_zero']
+    rw [U1fn_R a ha1]
+    congr 2
+    rw [show ((a : ℚ) + 1 - (1 : ℕ)) = a by push_cast; ring, one_div]
+  -- levels `k + 2`
+  have h0 : 0 ∉ entries w := fun h => by
+    obtain ⟨i, hi⟩ := mem_entries.1 h; have := hw.2 i; omega
+  by_cases haw : a + 1 ∈ entries w
+  · have hz : a + 1 ∈ Zset (entries w) := by
+      rw [mem_Zset]; exact ⟨haw, by omega, by simpa using ha⟩
+    rw [Acoef_eq_zero_of_mem (mem_insert_of_mem haw), qc_zero, zero_smul, sub_zero, map_smul,
+      map_sum]
+    simp only [map_smul, Ul_bv, U_snoc]
+    rw [← sum_coe_sort (Tset (entries w))]
+    have : ∀ y : Tset (entries w),
+        qc (Acoef y (entries w) / ((a : ℚ) + 1 - y)) • Uwy k (U (k + 1)) w y =
+        blockC (entries w) (some ⟨a + 1, hz⟩) y • ∑ r, blockInv (entries w) r y •
+          blockRhs (U (k + 1)) (fun τ => Uwy k (U (k + 1)) (Fin.init τ) (τ (Fin.last (k + 1))))
+            w r := by
+      intro y
+      rw [Uwy_block (valid_snoc_of_mem_Tset hw y.2) y.2, qc_smul]
+      simp only [qc_smul, blockC]
+      push_cast
+      rfl
+    rw [sum_congr rfl fun y _ => this y, blockSolve (entries w) h0]
+    simp only [blockRhs, show a + 1 - 2 = a - 1 by omega, Nat.add_sub_cancel]
+    rw [U_cons_eq, smul_smul, Eratio_mul_inv, one_smul]
+  · have hyT : a + 1 ∉ Tset (entries w) := fun hT => by
+      rcases (mem_Tset.1 hT).2 with h | ⟨_, h⟩
+      · omega
+      · exact ha (by simpa using h)
+    have hv : Valid (snoc w (a + 1)) := valid_snoc hw haw (by omega)
+    have hc : Acoef (a + 1) (insert a (entries w)) ≠ 0 := by
+      apply Acoef_ne_zero
+      rw [mem_Tset]; simp only [mem_insert, not_or]
+      exact ⟨⟨by omega, haw⟩, Or.inr ⟨by omega, by simp⟩⟩
+    rw [map_smul, map_sub, map_sum, map_smul, Ul_bv, U_snoc, Uwy_free hv hyT]
+    simp only [map_smul, Ul_bv, U_snoc, Nat.add_sub_cancel, show a + 1 - 2 = a - 1 by omega,
+      U_cons_eq]
+    rw [smul_smul, ← qc_mul, mul_one_div_cancel hc, qc_one, one_smul]
+    have hcast : ∀ y : ℕ, ((a : ℚ) + 1 - y) = (((a + 1 : ℕ) : ℚ) - y) := by intro y; push_cast; ring
+    simp only [hcast]
+    rw [sub_sub_cancel, smul_smul, Eratio_mul_inv, one_smul]
+
 end ProperCircularArc
