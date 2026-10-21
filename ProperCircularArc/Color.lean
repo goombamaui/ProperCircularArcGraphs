@@ -358,4 +358,31 @@ lemma Sh_Rh_Rh (n : ℕ) (G : CV R (n + 2)) :
   rw [rename_congr_fun (f := ⇑(swapPerm (n + 2) n) ∘ ⇑(rot (n + 1)) ∘ ⇑(rot (n + 1)))
     (g := ⇑(rot (n + 1)) ∘ ⇑(rot (n + 1)) ∘ ⇑(swapPerm (n + 2) 0)) (fun i => swap_rot_rot n i) G]
 
+/-! ## Naturality under change of coefficients -/
+
+lemma finSuccEquiv_map' {S : Type*} [CommRing S] (f : R →+* S) {n : ℕ} (G : CV R (n + 1)) :
+    finSuccEquiv S n (map f G) = (finSuccEquiv R n G).map (map f) := by
+  induction G using MvPolynomial.induction_on with
+  | C a =>
+    rw [map_C, ← algebraMap_eq, AlgEquiv.commutes, ← algebraMap_eq, AlgEquiv.commutes]
+    simp [Polynomial.algebraMap_apply, algebraMap_eq]
+  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add, Polynomial.map_add]
+  | mul_X p i hp =>
+    rw [map_mul, map_X, map_mul, map_mul, hp, Polynomial.map_mul]
+    congr 1
+    refine Fin.cases ?_ (fun j => ?_) i
+    · simp [finSuccEquiv_X_zero]
+    · simp [finSuccEquiv_X_succ]
+
+lemma Dh_map {S : Type*} [CommRing S] (f : R →+* S) (p : ℕ → R) {n : ℕ} (G : CV R (n + 1)) :
+    map f (Dh p n G) = Dh (f ∘ p) n (map f G) := by
+  rw [Dh_apply, Dh_apply, finSuccEquiv_map', Polynomial.sum_def, Polynomial.sum_def, map_sum]
+  rw [Finset.sum_subset (Polynomial.support_map_subset _ _)]
+  · refine Finset.sum_congr rfl fun m _ => ?_
+    rw [Polynomial.coeff_map, map_mul]
+    congr 1
+    simp [freshQ, map_sub, map_sum, map_pow]
+  · intro m _ hm
+    rw [Polynomial.notMem_support_iff.1 hm, zero_mul]
+
 end ProperCircularArc
