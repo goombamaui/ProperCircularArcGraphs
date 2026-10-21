@@ -77,3 +77,32 @@ A word in `M̂`, `D̂` (last letter outermost) builds a marked NUIG
 (Lemma `color`). The trace graph identifies outputs with inputs
 ([TraceGraph.lean](../ProperCircularArc/TraceGraph.lean)). Lemma `word` constructs the word of
 any marked NUIG ([NUIG.lean](../ProperCircularArc/NUIG.lean)).
+
+## Circular-arc models
+
+A model assigns to each vertex a closed arc `[s, s + ℓ]` of `ℝ/ℤ` with `0 ≤ ℓ < 1`
+([Arcs.lean](../ProperCircularArc/Arcs.lean)). Lemma `pca` is proved as follows:
+
+1. Reduce the starting points modulo `1`. They are distinct, since otherwise the shorter arc
+   would lie inside the longer one.
+2. Sort the arcs by starting point. The arcs through `1` (with `s + ℓ ≥ 1`) come last, since an
+   earlier arc through `1` would contain a later arc that does not pass through `1`.
+3. Unroll. Every arc gives the interval `A_v = [s, s + ℓ]`, and every arc through `1` also gives
+   `B_v = A_v - 1`. Sorted by left endpoint, the `k` intervals `B_v` come first and the `k`
+   intervals `A_v` of arcs through `1` come last.
+4. Right endpoints are sorted as well, since otherwise one arc would contain another. Hence
+   the intervals form a NUIG, and the first and last `k` intervals form cliques (they contain
+   `0` and `1`).
+5. `B_v` and `A_v` are disjoint because `ℓ < 1`. Identifying them gives back the arc graph,
+   because any point of an arc can be moved into `[0, 1)`.
+
+## Hikita's tableaux
+
+A tableau built from `T_j` is recorded by the columns of its vertices
+([Hikita.lean](../ProperCircularArc/Hikita.lean)). The weight of Definition `weight` is
+`hwt`, and the matrix of Definition `graph-tableau` is `hikMat`. Theorem `tableau` is proved
+by induction on the word. Adding a vertex adjacent to the marked vertices multiplies by
+`M_k^{(N)}` (`hikSum_M`). Forgetting a marked vertex multiplies by `D_k^{(N)}` (`hikSum_D`),
+because assignments that put two adjacent vertices in the same column have weight `0`.
+[Tableaux.lean](../ProperCircularArc/Tableaux.lean) shows that assignments of nonzero weight are
+genuine tableau builds, which is the remark after Definition `hikita-rule`.

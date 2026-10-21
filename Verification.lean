@@ -60,3 +60,9 @@ Every theorem below should depend only on `propext`, `Classical.choice` and `Quo
 #print axioms ProperCircularArc.pca_formula
 #print axioms ProperCircularArc.pca_formula'
 #print axioms ProperCircularArc.hikita_weight
+
+-- Hikita's rule is well defined; the formulas are sums over tableaux.
+#print axioms ProperCircularArc.isBuild_of_hwt_ne_zero
+#print axioms ProperCircularArc.pca_formula_tableaux
+#print axioms ProperCircularArc.hikita_tableaux
+#print axioms ProperCircularArc.tableau_nuig

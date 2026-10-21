@@ -2,10 +2,10 @@
 
 Lean 4 formalization accompanying Aarush Vailaya,
 *Proper circular arc graphs are e-positive* ([manuscript](paper/ProperCircularArcGraphs.pdf)).
-It proves that the chromatic symmetric function of a proper circular arc graph, presented as
-the trace of a marked natural unit interval graph, is `e`-positive. It does this by
-constructing the paper's change of basis `U_k` between tableau matrices and colour matrices.
-As a special case it gives a new proof that natural unit interval graphs are `e`-positive.
+It proves that the chromatic symmetric function of every proper circular arc graph is
+`e`-positive. It does this by constructing the paper's change of basis `U_k` between tableau
+matrices and colour matrices. It also proves the explicit tableau formula of Section 7. As a
+special case it gives a new proof that natural unit interval graphs are `e`-positive.
 
 ## Results
 
@@ -21,8 +21,13 @@ As a special case it gives a new proof that natural unit interval graphs are `e`
 | Proposition `finite` | finite intertwining, `U_k^{(N)}` invertible for `k ≤ N` | [`UN_M`, `UN_D`](ProperCircularArc/FiniteU.lean), [`UN_surjective`](ProperCircularArc/Invertible.lean) |
 | Lemma `color` | colour matrices count proper colourings; trace | [`colMatP_eq_colorSum`](ProperCircularArc/Graphs.lean), [`chromSym_trGraph`](ProperCircularArc/TraceGraph.lean) |
 | Lemma `word` | marked NUIGs are words in `M̂`, `D̂` | [`word_of_nuig`](ProperCircularArc/NUIG.lean) |
-| Theorem `pca` | `X_{tr G}(x_1,…,x_N) = tr M_G^{(N)}`, `e`-positive | [`Word.pca_trace`, `Word.pca_epositive`](ProperCircularArc/MainWord.lean), [`pca_epositive`](ProperCircularArc/PCATrace.lean) |
+| Lemma `pca` | unrolling a proper circular-arc model into a marked NUIG | [`PCAModel.exists_sorted`, `SortedModel.iso`](ProperCircularArc/Arcs.lean) |
+| Theorem `pca` | every proper circular arc graph is `e`-positive; `X_Γ(x_1,…,x_N) = tr M_G^{(N)}` | [`pca_graph_epositive`](ProperCircularArc/Arcs.lean), [`pca_epositive`](ProperCircularArc/PCATrace.lean), [`Word.pca_trace`](ProperCircularArc/MainWord.lean) |
 | Theorem `stanstem` | NUIGs are `e`-positive | [`nuig_epositive`](ProperCircularArc/NUIG.lean) |
+| Hikita's rule | a vertex can be placed whenever its factor `A` is nonzero | [`isBuild_of_hwt_ne_zero`](ProperCircularArc/Tableaux.lean) |
+| Theorem `tableau` | `𝓜_\bG^{(N)} = M_\bG^{(N)}` | [`Word.hikMat_eq_tabMat`](ProperCircularArc/Hikita.lean), [`tableau_nuig`](ProperCircularArc/Tableaux.lean) |
+| Theorem `pca-formula` | explicit tableau formula for `X_Γ` | [`pca_formula`, `pca_formula'`](ProperCircularArc/Hikita.lean), [`pca_formula_tableaux`](ProperCircularArc/Tableaux.lean) |
+| Theorem `hikita` (`q = 1`) | `X_G = ∑_T w(T ∣ ∅, G)` | [`hikita_weight`](ProperCircularArc/Hikita.lean), [`hikita_tableaux`](ProperCircularArc/Tableaux.lean) |
 
 `e`-positivity is stated for every finite alphabet `x_1, …, x_N`: the chromatic symmetric
 function `X(x_1, …, x_N)` equals `P(e_1, …, e_N)` for a polynomial `P` with nonnegative
@@ -35,10 +40,10 @@ no custom axioms.
 
 ## Status
 
-Formalized: Sections 3–6 of the paper and Theorem `pca` for traces of marked natural unit
-interval graphs (the combinatorial form of the theorem). In progress: Lemma `pca` (unrolling a
-geometric circular-arc model into a marked NUIG) and Section 7 (Hikita's rule and Theorem
-`pca-formula`). See [docs/STATUS.md](docs/STATUS.md).
+All numbered results of the paper are formalized except the worked examples. The
+statements are proved for every finite alphabet. The remaining differences from the paper
+(the lift to infinitely many variables, Lemma `tableau-mult` for single cliques, and Hikita's
+probabilities) are listed in [docs/STATUS.md](docs/STATUS.md).
 
 ## Build
 

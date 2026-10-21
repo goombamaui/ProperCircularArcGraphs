@@ -25,3 +25,4 @@ import ProperCircularArc.NUIG
 import ProperCircularArc.PCATrace
 import ProperCircularArc.Arcs
 import ProperCircularArc.Hikita
+import ProperCircularArc.Tableaux
