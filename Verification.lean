@@ -49,3 +49,8 @@ Every theorem below should depend only on `propext`, `Classical.choice` and `Quo
 #print axioms ProperCircularArc.Word.stanstem_epositive
 #print axioms ProperCircularArc.nuig_epositive
 #print axioms ProperCircularArc.pca_epositive
+
+-- Lemma `pca` (unrolling an arc model) and Theorem `pca` for proper circular arc graphs.
+#print axioms ProperCircularArc.SortedModel.iso
+#print axioms ProperCircularArc.PCAModel.exists_sorted
+#print axioms ProperCircularArc.pca_graph_epositive

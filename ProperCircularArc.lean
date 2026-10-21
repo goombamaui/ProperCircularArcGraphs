@@ -23,3 +23,4 @@ import ProperCircularArc.TraceGraph
 import ProperCircularArc.MainWord
 import ProperCircularArc.NUIG
 import ProperCircularArc.PCATrace
+import ProperCircularArc.Arcs
