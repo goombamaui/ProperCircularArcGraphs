@@ -1,5 +1,6 @@
 import ProperCircularArc.MainWord
 import Mathlib.Data.Finset.Card
+import Mathlib.Combinatorics.SimpleGraph.Maps
 
 /-!
 # Lemma `word`: every marked natural unit interval graph is the graph of a word
@@ -331,5 +332,109 @@ lemma adjSpec_build (hG : IsNUIG G) (hin : ∀ i j : Fin n, (i : ℕ) < a → (j
         exact G.loopless.irrefl _ hadj
 
 end Build
+
+/-! ## Lemma `word` -/
+
+section LemmaWord
+
+variable {n : ℕ} {G : SimpleGraph (Fin n)} [DecidableRel G.Adj]
+
+lemma level_build_final (hG : IsNUIG G) {a b : ℕ} (ha : a ≤ n) (hb : b ≤ n)
+    (hout : ∀ i j : Fin n, n - b ≤ (i : ℕ) → n - b ≤ (j : ℕ) → i ≠ j → G.Adj i j) :
+    b ≤ (build G a (n - a)).1 := by
+  rcases Nat.eq_or_lt_of_le ha with rfl | hlt
+  · simp [build]; exact hb
+  obtain ⟨t, ht⟩ : ∃ t, n - a = t + 1 := ⟨n - a - 1, by omega⟩
+  rw [ht]
+  show b ≤ min (cnt G (a + t)) (build G a t).1 + 1
+  rw [min_eq_left (level_build a hG t (by omega))]
+  by_cases hb1 : b ≤ 1
+  · omega
+  have hm : a + t < n := by omega
+  have hlast : a + t = n - 1 := by omega
+  have hadj : G.Adj ⟨n - b, by omega⟩ ⟨a + t, hm⟩ := hout _ _ (by simp) (by simp; omega)
+    (by intro e; have := congrArg Fin.val e; simp at this; omega)
+  have := (adj_iff_earlier G hG (u := ⟨n - b, by omega⟩) (v := ⟨a + t, hm⟩)
+    (by simp [Fin.lt_def]; omega)).1 hadj
+  unfold cnt; rw [dif_pos hm]
+  simp only at this
+  omega
+
+/-- **Lemma `word`**: a marked NUIG on `Fin n` whose first `a` and last `b` vertices form cliques
+is the graph of a word from level `a` to level `b`, with inputs `0, …, a - 1` and outputs
+`n - b, …, n - 1`. -/
+theorem word_of_nuig (hG : IsNUIG G) (a b : ℕ) (ha : a ≤ n) (hb : b ≤ n)
+    (hin : ∀ i j : Fin n, (i : ℕ) < a → (j : ℕ) < a → i ≠ j → G.Adj i j)
+    (hout : ∀ i j : Fin n, n - b ≤ (i : ℕ) → n - b ≤ (j : ℕ) → i ≠ j → G.Adj i j) :
+    ∃ (w : Word a b) (h : Word.nv w = n),
+      (∀ u v, Word.adj w u v ↔ G.Adj (Fin.cast h u) (Fin.cast h v)) ∧
+      (∀ r, (Word.inp w r : ℕ) = r) ∧ (∀ s, (Word.mark w s : ℕ) = n - b + s) := by
+  set W := build G a (n - a)
+  have hbW : b ≤ W.1 := level_build_final hG ha hb hout
+  let w : Word a b := Word.DW (W.1 - b) (Word.castW (by omega : W.1 = b + (W.1 - b)) W.2)
+  have hnv : Word.nv w = n := by
+    simp only [w]; rw [Word.nv_DW, Word.nv_castW, nv_build]; omega
+  refine ⟨w, hnv, ?_, Word.inp_val w, fun s => by rw [Word.mark_val, hnv]⟩
+  have hspec : Word.AdjSpec w (GR G) :=
+    Word.adjSpec_DW _ _ (Word.adjSpec_castW _ (adjSpec_build a hG hin (n - a) (by omega)))
+  intro u v
+  rw [hspec u v]
+  constructor
+  · rintro ⟨_, _, h⟩; exact h
+  · intro h; exact ⟨_, _, h⟩
+
+end LemmaWord
+
+/-! ## Consequences -/
+
+section Consequences
+
+variable {V V' : Type*} [Fintype V] [DecidableEq V] [Fintype V'] [DecidableEq V']
+
+/-- The chromatic symmetric function is an isomorphism invariant. -/
+lemma chromSym_iso (N : ℕ) {G : SimpleGraph V} {G' : SimpleGraph V'} (e : SimpleGraph.Iso G G') :
+    chromSym N G = chromSym N G' := by
+  classical
+  unfold chromSym
+  refine Fintype.sum_equiv (Equiv.arrowCongr e.toEquiv (Equiv.refl _)) _ _ fun κ => ?_
+  have hP : IsProper G' (Equiv.arrowCongr e.toEquiv (Equiv.refl _) κ) ↔ IsProper G κ := by
+    simp only [IsProper, Equiv.arrowCongr_apply, Equiv.coe_refl, Function.comp_apply, id]
+    constructor
+    · intro h u v huv
+      have := h (e u) (e v) (e.map_rel_iff.2 huv)
+      convert this using 2 <;> exact (e.toEquiv.symm_apply_apply _).symm
+    · intro h u v huv
+      have := h (e.symm u) (e.symm v) (by rwa [← e.map_rel_iff, e.apply_symm_apply,
+        e.apply_symm_apply])
+      exact this
+  rw [hP]
+  split_ifs
+  · exact Fintype.prod_equiv e.toEquiv (fun v => MvPolynomial.X (κ v))
+      (fun v' => MvPolynomial.X (Equiv.arrowCongr e.toEquiv (Equiv.refl _) κ v'))
+      (fun v => by
+        first
+          | exact congrArg (fun c => MvPolynomial.X c) (congrArg κ (e.symm_apply_apply v).symm)
+          | simp [e.toEquiv.symm_apply_apply])
+  · rfl
+
+end Consequences
+
+/-- **Theorem `stanstem`** (natural unit interval graphs): for every NUIG `G` and every number
+`N` of colours, `X_G(x_1, …, x_N)` is the trace of a tableau matrix and is a polynomial in
+`e_1, …, e_N` with nonnegative coefficients. -/
+theorem nuig_epositive {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] (hG : IsNUIG G)
+    (N : ℕ) :
+    (∃ w : Word 0 0, algebraMap (Pol N) (KN N) (chromSym N G) = Matrix.trace (Word.tabMat N w)) ∧
+    ∃ P : MvPolynomial (Fin N) ℚ, (∀ e, 0 ≤ P.coeff e) ∧
+      MvPolynomial.aeval (fun j : Fin N => MvPolynomial.esymm (Fin N) ℚ ((j : ℕ) + 1)) P =
+        chromSym N G := by
+  obtain ⟨w, h, hadj, -, -⟩ := word_of_nuig hG 0 0 (by omega) (by omega)
+    (fun i _ hi => absurd hi (by omega)) (fun i _ hi => absurd hi (by have := i.2; omega))
+  let e : SimpleGraph.Iso (Word.graph w) G :=
+    { toEquiv := finCongr h
+      map_rel_iff' := fun {u v} => (hadj u v).symm }
+  obtain ⟨htr, P, hP, hPe⟩ := Word.stanstem_epositive N w
+  rw [chromSym_iso N e] at htr hPe
+  exact ⟨⟨w, htr⟩, P, hP, hPe⟩
 
 end ProperCircularArc
