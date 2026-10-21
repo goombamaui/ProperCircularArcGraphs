@@ -25,20 +25,17 @@ def cycTrace (hk : k ≤ n) (G : SimpleGraph (Fin (n + k))) : SimpleGraph (Fin n
   symm := ⟨fun p q ⟨hpq, u, v, hu, hv, h⟩ => ⟨hpq.symm, v, u, hv, hu, h.symm⟩⟩
   loopless := ⟨fun p h => h.1 rfl⟩
 
-/-- **Theorem `pca`** (combinatorial form): if `G` is a NUIG on `Fin (n + k)` whose first and last
-`k` vertices form cliques, `k ≤ n`, and vertex `n + r` is not adjacent to vertex `r`, then the
-chromatic symmetric function of the trace `cycTrace G` is, for every `N`, the trace of a tableau
-matrix and a polynomial in `e_1, …, e_N` with nonnegative coefficients. -/
-theorem pca_epositive (G : SimpleGraph (Fin (n + k))) [DecidableRel G.Adj] (hG : IsNUIG G)
+/-- The word of a marked NUIG whose trace is `cycTrace G` (Lemma `word` plus the trace
+identification). -/
+theorem cycTrace_word (G : SimpleGraph (Fin (n + k))) [DecidableRel G.Adj] (hG : IsNUIG G)
     (hk : k ≤ n)
     (hin : ∀ i j : Fin (n + k), (i : ℕ) < k → (j : ℕ) < k → i ≠ j → G.Adj i j)
     (hout : ∀ i j : Fin (n + k), n ≤ (i : ℕ) → n ≤ (j : ℕ) → i ≠ j → G.Adj i j)
-    (hloop : ∀ r : ℕ, (hr : r < k) → ¬G.Adj ⟨n + r, by omega⟩ ⟨r, by omega⟩) (N : ℕ) :
-    (∃ w : Word k k, algebraMap (Pol N) (KN N) (chromSym N (cycTrace hk G)) =
-        Matrix.trace (Word.tabMat N w)) ∧
-    ∃ P : MvPolynomial (Fin N) ℚ, (∀ e, 0 ≤ P.coeff e) ∧
-      MvPolynomial.aeval (fun j : Fin N => MvPolynomial.esymm (Fin N) ℚ ((j : ℕ) + 1)) P =
-        chromSym N (cycTrace hk G) := by
+    (hloop : ∀ r : ℕ, (hr : r < k) → ¬G.Adj ⟨n + r, by omega⟩ ⟨r, by omega⟩) :
+    ∃ (w : Word k k) (h : Word.nv w = n + k) (hw : Word.TraceOK w),
+      (∀ u v, Word.adj w u v ↔ G.Adj (Fin.cast h u) (Fin.cast h v)) ∧
+      (∀ r, (Word.inp w r : ℕ) = r) ∧ (∀ s, (Word.mark w s : ℕ) = n + s) ∧
+      Nonempty (SimpleGraph.Iso (Word.trGraph w hw) (cycTrace hk G)) := by
   obtain ⟨w, h, hadj, hinp, hmark⟩ := word_of_nuig hG k k (by omega) (by omega) hin
     (fun i j hi hj hij => hout i j (by omega) (by omega) hij)
   have hmark' : ∀ s, (Word.mark w s : ℕ) = n + s := fun s => by rw [hmark]; omega
@@ -102,6 +99,23 @@ theorem pca_epositive (G : SimpleGraph (Fin (n + k))) [DecidableRel G.Adj] (hG :
           refine ⟨fun e => hne (hφinj e), Fin.cast h u, Fin.cast h v, ?_, ?_, (hadj u v).1 hadj'⟩
           · rw [← hproj, hu]
           · rw [← hproj, hv] }
+  exact ⟨w, h, hw, hadj, hinp, hmark', ⟨e⟩⟩
+
+/-- **Theorem `pca`** (combinatorial form): if `G` is a NUIG on `Fin (n + k)` whose first and last
+`k` vertices form cliques, `k ≤ n`, and vertex `n + r` is not adjacent to vertex `r`, then the
+chromatic symmetric function of the trace `cycTrace G` is, for every `N`, the trace of a tableau
+matrix and a polynomial in `e_1, …, e_N` with nonnegative coefficients. -/
+theorem pca_epositive (G : SimpleGraph (Fin (n + k))) [DecidableRel G.Adj] (hG : IsNUIG G)
+    (hk : k ≤ n)
+    (hin : ∀ i j : Fin (n + k), (i : ℕ) < k → (j : ℕ) < k → i ≠ j → G.Adj i j)
+    (hout : ∀ i j : Fin (n + k), n ≤ (i : ℕ) → n ≤ (j : ℕ) → i ≠ j → G.Adj i j)
+    (hloop : ∀ r : ℕ, (hr : r < k) → ¬G.Adj ⟨n + r, by omega⟩ ⟨r, by omega⟩) (N : ℕ) :
+    (∃ w : Word k k, algebraMap (Pol N) (KN N) (chromSym N (cycTrace hk G)) =
+        Matrix.trace (Word.tabMat N w)) ∧
+    ∃ P : MvPolynomial (Fin N) ℚ, (∀ e, 0 ≤ P.coeff e) ∧
+      MvPolynomial.aeval (fun j : Fin N => MvPolynomial.esymm (Fin N) ℚ ((j : ℕ) + 1)) P =
+        chromSym N (cycTrace hk G) := by
+  obtain ⟨w, -, hw, -, -, -, ⟨e⟩⟩ := cycTrace_word G hG hk hin hout hloop
   obtain ⟨P, hP, hPe⟩ := Word.pca_epositive N w hw
   rw [chromSym_iso N e] at hPe
   refine ⟨⟨w, ?_⟩, P, hP, hPe⟩

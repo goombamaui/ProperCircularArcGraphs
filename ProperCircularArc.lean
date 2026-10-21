@@ -24,3 +24,4 @@ import ProperCircularArc.MainWord
 import ProperCircularArc.NUIG
 import ProperCircularArc.PCATrace
 import ProperCircularArc.Arcs
+import ProperCircularArc.Hikita

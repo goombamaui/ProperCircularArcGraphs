@@ -54,3 +54,9 @@ Every theorem below should depend only on `propext`, `Classical.choice` and `Quo
 #print axioms ProperCircularArc.SortedModel.iso
 #print axioms ProperCircularArc.PCAModel.exists_sorted
 #print axioms ProperCircularArc.pca_graph_epositive
+
+-- Section 7: Theorem `tableau`, Theorem `pca-formula`, Theorem `hikita` (weight form).
+#print axioms ProperCircularArc.Word.hikMat_eq_tabMat
+#print axioms ProperCircularArc.pca_formula
+#print axioms ProperCircularArc.pca_formula'
+#print axioms ProperCircularArc.hikita_weight
