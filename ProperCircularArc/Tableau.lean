@@ -58,6 +58,22 @@ abbrev snoc {n : ℕ} (σ : Idx n) (y : ℕ) : Idx (n + 1) := Fin.snoc (α := fu
 /-- Prepend an entry. -/
 abbrev cons {n : ℕ} (a : ℕ) (σ : Idx n) : Idx (n + 1) := Fin.cons (α := fun _ => ℕ) a σ
 
+@[simp] lemma snoc_last' {n : ℕ} (σ : Idx n) (y : ℕ) : snoc σ y (Fin.last n) = y :=
+  Fin.snoc_last (α := fun _ => ℕ) (p := σ) (x := y)
+
+@[simp] lemma snoc_castSucc' {n : ℕ} (σ : Idx n) (y : ℕ) (i : Fin n) :
+    snoc σ y i.castSucc = σ i :=
+  Fin.snoc_castSucc (α := fun _ => ℕ) (p := σ) (x := y) (i := i)
+
+@[simp] lemma init_snoc' {n : ℕ} (σ : Idx n) (y : ℕ) : Fin.init (snoc σ y) = σ :=
+  Fin.init_snoc (α := fun _ => ℕ) (p := σ) (x := y)
+
+@[simp] lemma cons_zero' {n : ℕ} (a : ℕ) (σ : Idx n) : cons a σ 0 = a := rfl
+
+@[simp] lemma cons_succ' {n : ℕ} (a : ℕ) (σ : Idx n) (i : Fin n) : cons a σ i.succ = σ i := rfl
+
+@[simp] lemma tail_cons' {n : ℕ} (a : ℕ) (σ : Idx n) : Fin.tail (cons a σ) = σ := rfl
+
 /-- Entry `i` of a tuple, or `0` if out of range. -/
 def getE {n : ℕ} (σ : Idx n) (i : ℕ) : ℕ := if h : i < n then σ ⟨i, h⟩ else 0
 
