@@ -1,8 +1,8 @@
 import ProperCircularArc.Laurent
 import ProperCircularArc.Coefficients
+import ProperCircularArc.ScalarIdentities
 import ProperCircularArc.Color
 import ProperCircularArc.Tableau
-import ProperCircularArc.ScalarIdentities
 import ProperCircularArc.TableauIdentities
 import ProperCircularArc.Block
 import ProperCircularArc.Rank
@@ -10,3 +10,16 @@ import ProperCircularArc.PowerSum
 import ProperCircularArc.Construction
 import ProperCircularArc.Span
 import ProperCircularArc.Intertwine
+import ProperCircularArc.Specialize
+import ProperCircularArc.Admissible
+import ProperCircularArc.FiniteColor
+import ProperCircularArc.FiniteU
+import ProperCircularArc.Invertible
+import ProperCircularArc.Trace
+import ProperCircularArc.Positivity
+import ProperCircularArc.TraceEpos
+import ProperCircularArc.Graphs
+import ProperCircularArc.TraceGraph
+import ProperCircularArc.MainWord
+import ProperCircularArc.NUIG
+import ProperCircularArc.PCATrace
