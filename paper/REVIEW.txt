@@ -1,0 +1,29 @@
+Manuscript revision review — 2026-10-21
+
+Baseline: arXiv:2609.33124v1 (the latest arXiv version as checked on 2026-10-21).
+Source downloaded directly from https://arxiv.org/src/2609.33124v1.
+Original filename: ProperCircularArcGraph_1_.tex.
+SHA-256 of the original TeX: 6f371daca6116fa497600115abec9b4746a14579e80742d2096253164228ee47.
+The baseline is preserved unchanged in arxiv-v1/.
+The accompanying .diff compares the downloaded source with the revised manuscript.
+
+Every added or rewritten passage is marked in the TeX using \rev{...}.
+The \rev macro also makes citations and hyperlinks within revisions red.
+New bibliography entries and their labels are red.
+The sections from Definitions through Tableau matrices of graphs are byte-for-byte
+identical to arXiv v1. Changes are confined to the abstract, introduction, further
+directions, bibliography, and the red-review macro.
+
+The revisions credit Alexandersson and Panova for the circular chromatic conjecture
+(published Conjecture 5.2), cite their DOI 10.1016/j.disc.2018.09.001, discuss the
+circular LLT positivity conjecture after q -> q+1 (published Conjecture 4.5), and cite
+Alexandersson and Dai, arXiv:2610.26294, Theorem B, for its positivity resolution.
+They also retain the Lean formalization note and the existing update on the natural
+unit interval case. Statements of positivity do not assert unimodality.
+
+The review PDF was rebuilt successfully, with no LaTeX warnings or bad boxes.
+The source audit found no added or replacement tokens outside red revision regions
+in the document body (after excluding wholly red new bibliography entries).
+
+Local PAPER.tex and PAPER_v2.tex and repository paper/ProperCircularArcGraphs.tex
+have identical contents, as do their compiled PDFs.
