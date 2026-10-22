@@ -29,7 +29,8 @@ special case it gives a new proof that natural unit interval graphs are `e`-posi
 | Theorem `pca-formula` | explicit tableau formula for `X_Γ` | [`pca_formula`, `pca_formula'`](ProperCircularArc/Hikita.lean), [`pca_formula_tableaux`](ProperCircularArc/Tableaux.lean) |
 | Theorem `hikita` (`q = 1`) | `X_G = ∑_T w(T ∣ ∅, G)` | [`hikita_weight`](ProperCircularArc/Hikita.lean), [`hikita_tableaux`](ProperCircularArc/Tableaux.lean) |
 
-The completed additions are in [Infinite.lean](ProperCircularArc/Infinite.lean),
+Stable alphabets, graph products, probabilities, and examples are developed in
+[Infinite.lean](ProperCircularArc/Infinite.lean),
 [Gluing.lean](ProperCircularArc/Gluing.lean), [Probability.lean](ProperCircularArc/Probability.lean),
 [Examples.lean](ProperCircularArc/Examples.lean), and
 [ExamplesMatrices.lean](ProperCircularArc/ExamplesMatrices.lean).
@@ -45,8 +46,8 @@ no custom axioms.
 
 ## Status
 
-The previously listed gaps are closed: the lift to infinitely many variables, products of
-arbitrary marked NUIGs, Hikita's probability formula, and the worked CSF and matrix examples.
+The formalization includes infinitely many variables, products of arbitrary marked NUIGs,
+Hikita's probability formula, and the worked CSF and matrix examples.
 See [docs/STATUS.md](docs/STATUS.md) for the precise representations and theorem names.
 
 ## Build
@@ -59,11 +60,18 @@ lake build
 lake env lean Verification.lean
 ```
 
+## Manuscript
+
+- **Version 1:** the original [arXiv submission](https://arxiv.org/abs/2609.33124v1),
+  September 27, 2026 ([PDF](paper/v1/ProperCircularArcGraphs.pdf),
+  [TeX](paper/v1/ProperCircularArcGraphs.tex)).
+- **Version 2:** the current manuscript, October 21, 2026
+  ([PDF](paper/ProperCircularArcGraphs.pdf), [TeX](paper/ProperCircularArcGraphs.tex)).
+
 ## Layout
 
 - [ProperCircularArc/](ProperCircularArc): the formalization, one file per step of the paper.
 - [Verification.lean](Verification.lean): axiom audit.
-- [paper/](paper): the manuscript.
+- [paper/](paper): the current manuscript and the original version in `v1/`.
 - [docs/](docs): design notes and the correspondence with the paper.
-- [scripts/prototype.py](scripts/prototype.py): an exact sympy prototype of the symbolic model,
-  used to test the formulas before formalizing them.
+- [scripts/](scripts): the exact Sympy prototype and the generator for Lean example certificates.

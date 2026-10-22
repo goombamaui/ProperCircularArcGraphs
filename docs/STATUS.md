@@ -1,7 +1,6 @@
 # Status
 
-The four previously listed formalization gaps are closed. The main results and the worked
-CSF and matrix examples are formalized. Nothing uses `sorry`, and
+The main results and the worked CSF and matrix examples are formalized. Nothing uses `sorry`, and
 [Verification.lean](../Verification.lean) checks that the main theorems depend only on `propext`,
 `Classical.choice` and `Quot.sound`.
 

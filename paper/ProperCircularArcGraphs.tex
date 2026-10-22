@@ -9,7 +9,6 @@
 \usepackage{color}
 \usepackage[colorlinks=true,citecolor=black,linkcolor=black,urlcolor=blue]{hyperref}
 \usepackage{xcolor}
-\newcommand{\rev}[1]{{\color{red}\hypersetup{citecolor=red,linkcolor=red,urlcolor=red}#1}}% Changes from arXiv v1, including citations and links
 \usepackage{bm}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,calc,math}
@@ -53,7 +52,7 @@
 \maketitle
 
 \begin{abstract}
-We prove an $e$-positive formula for the chromatic symmetric function of proper circular arc graphs solving the $q=1$ case of \rev{a conjecture of Ellzey and of Alexandersson and Panova}. In doing so, we provide a new proof of the $e$-positivity of unit interval graphs, which alongside Guay-Paquet's reduction gives a new proof of the Stanley--Stembridge conjecture. We define color matrices, which count proper colorings, and tableau matrices, whose entries are nonnegative rational numbers and ratios of elementary symmetric functions. We prove the two matrices are related by a single family of change of basis matrices, which become invertible after restricting to finitely many colors, and we show the chromatic symmetric function of proper circular arc graphs comes from taking the trace of these matrices. Using Hikita's tableaux, this gives an explicit formula for the chromatic symmetric function of a proper circular arc graph as a weighted sum over tableaux whose first and last $k$ vertices lie in the same columns.
+We prove an $e$-positive formula for the chromatic symmetric function of proper circular arc graphs solving the $q=1$ case of a conjecture of Ellzey and of Alexandersson and Panova. In doing so, we provide a new proof of the $e$-positivity of unit interval graphs, which alongside Guay-Paquet's reduction gives a new proof of the Stanley--Stembridge conjecture. We define color matrices, which count proper colorings, and tableau matrices, whose entries are nonnegative rational numbers and ratios of elementary symmetric functions. We prove the two matrices are related by a single family of change of basis matrices, which become invertible after restricting to finitely many colors, and we show the chromatic symmetric function of proper circular arc graphs comes from taking the trace of these matrices. Using Hikita's tableaux, this gives an explicit formula for the chromatic symmetric function of a proper circular arc graph as a weighted sum over tableaux whose first and last $k$ vertices lie in the same columns.
 
 
 \end{abstract}
@@ -74,22 +73,22 @@ to standard Young tableaux.
 Shareshian and Wachs introduced the chromatic quasisymmetric function
 $X_G(\bm x;q)$, showed that it is symmetric for natural unit interval
 graphs, and conjectured that its $e$-coefficients are polynomials in $q$
-with nonnegative coefficients \cite{chromposquasi}\rev{, which was recently proved by OpenAI \cite[Theorem 1.1]{openaichrom}}. Ellzey generalized
+with nonnegative coefficients \cite{chromposquasi}, which was recently proved by OpenAI \cite[Theorem 1.1]{openaichrom}. Ellzey generalized
 this function to directed graphs and conjectured the same positivity for
 proper circular arc digraphs \cite[Conjecture 1.4]{chromquasidi}.
-\rev{Alexandersson and Panova independently conjectured the same positivity,
-together with unimodality \cite[Conjecture 5.2]{lltcycles}.}
+Alexandersson and Panova independently conjectured the same positivity,
+together with unimodality \cite[Conjecture 5.2]{lltcycles}.
 At $q=1$, this conjectures that every proper circular arc graph is $e$-positive.
 Several families built from cycles are known to be $e$-positive
-\cite{graphtwin,cyclechains,cyclechordsepositive}\rev{. The stronger positivity in $q$ is known for directed cycles
-\cite{lltcycles}, but remains open for arbitrary proper circular arc digraphs.}
+\cite{graphtwin,cyclechains,cyclechordsepositive}. The stronger positivity in $q$ is known for classes like directed cycles
+\cite{lltcycles}, but remains open for arbitrary proper circular arc digraphs.
 
-\rev{A parallel question concerns vertical-strip LLT polynomials, whose
+A parallel question concerns vertical-strip LLT polynomials, whose
 colouring sums allow equal colours on ordinary edges and impose strict
 inequalities along marked edges. Alexandersson and Panova conjectured
 that their circular versions are $e$-positive after the substitution
 $q\mapsto q+1$ \cite[Conjecture 4.5]{lltcycles}. This $e$-positivity was
-recently proved by Alexandersson and Dai \cite[Theorem~B]{lltflip}.}
+recently proved by Alexandersson and Dai \cite[Theorem~B]{lltflip}.
 
 The chromatic symmetric function is multiplicative over connected
 components, but gluing graphs at a vertex does not correspond to
@@ -102,16 +101,15 @@ matrices, whose entries count proper colorings with specified colors on
 the marked vertices, and $e$-positive tableau matrices, which record the columns of
 specified boxes in Hikita's tableau. We show these matrices are related by a change of basis and satisfy the same multiplication and trace properties. Since every proper circular arc graph can be obtained by identifying the first and last $k$ vertices of a natural unit interval graph, the tableau
 trace then proves that every proper circular arc graph is $e$-positive
-(Theorem~\ref{thm:pca}), establishing the $q=1$ case of \rev{the
-conjecture of Ellzey and of Alexandersson and Panova}.
+(Theorem~\ref{thm:pca}), establishing the $q=1$ case of the
+conjecture of Ellzey and of Alexandersson and Panova.
 
 Moreover, the tableau matrices give an explicit formula for the chromatic symmetric function of a proper circular arc graph (Theorem~\ref{thm:pca-formula}). We cut the circle to obtain a natural unit interval graph, place the first $k$ vertices at the ends of rows of lengths $j_1,\dots,j_k$, build the rest of the graph with Hikita's rule, and keep the tableaux whose last $k$ vertices return to the columns $j_1,\dots,j_k$. Unlike Hikita's formula, this sums over one starting tableau for each choice of $j$, so the number of terms grows exponentially in $k$, but every term is explicit. In relating the two matrices, we also provide a new proof
 of the Stanley--Stembridge conjecture.
 
 More specifically, Section~\ref{section:defs} provides definitions, Section~\ref{section:color} describes color matrices and their multiplication and trace properties, Section~\ref{section:tableau}
 defines the tableau operators and states the main theorem, which is proved in Section~\ref{section:proof}. Section~\ref{section:trace} proves
-the trace formula for tableau matrices and establishes $e$-positivity. Finally, Section~\ref{section:extra} describes the tableau matrices using Hikita's rule and proves the following explicit formula.
-\rev{The change-of-basis theorem, $e$-positivity results, and tableau formulas in this paper have been formalized in Lean~4 \cite{lean4}, using mathlib \cite{mathlib}. The source code, build instructions, and a correspondence between the statements of the paper and the Lean theorems are available in the \href{https://github.com/goombamaui/ProperCircularArcGraphs}{Lean formalization repository}.}
+the trace formula for tableau matrices and establishes $e$-positivity. Finally, Section~\ref{section:extra} describes the tableau matrices using Hikita's rule and proves the following explicit formula. The change-of-basis theorem, $e$-positivity results, and tableau formulas in this paper have been formalized in Lean~4 \cite{lean4}, using mathlib \cite{mathlib}. The source code, build instructions, and a correspondence between the statements of the paper and the Lean theorems are available in the \href{https://github.com/goombamaui/ProperCircularArcGraphs}{Lean formalization repository}.
 
 \begin{theorem}\label{thm:pca-formula}
 Let $\Gamma$ be a proper circular arc graph on $n$ vertices, obtained from
@@ -1199,11 +1197,10 @@ In particular, for any non-NUIG marked graph $\bG$ with clique inputs and output
 single-vertex constructions in \cite{singlegluing}.
 
  
-Another direction is to seek a $q$-refinement of these tableau matrices, using the same basis to describe the effect of ascent weights. A corresponding trace formula would extend the $q$-trace question in \cite[Conjecture 74]{singlegluing} to gluing along larger cliques. \rev{Since the $e$-coefficients of
+Another direction is to seek a $q$-refinement of these tableau matrices, using the same basis to describe the effect of ascent weights. A corresponding trace formula would extend the $q$-trace question in \cite[Conjecture 74]{singlegluing} to gluing along larger cliques. Since the $e$-coefficients of
 $X_G(\bm x;q)$ are now known to lie in $\bN[q]$ for every natural unit
 interval graph $G$ \cite{openaichrom}, the corresponding positivity
 question for proper circular arc digraphs remains open for general $q$.
-A $q$-analogue of Theorem~\ref{thm:pca} would be one approach to it.}
 
 
 Similarly, one can extend the tableau formulas to the
@@ -1213,7 +1210,7 @@ vertices to have the same color, such an extension would also need to
 account for repeated colors on the marked vertices. This could perhaps extend Hikita's tableau method to provide a simpler formula for the Tutte symmetric function of NUIGs.
 
 \section{Acknowledgments}
-\rev{The author thanks Per Alexandersson for pointing out the related circular $e$-positivity conjectures and the recent work on circular LLT polynomials.}
+The author thanks Per Alexandersson for pointing out the related circular $e$-positivity conjectures and the recent work on circular LLT polynomials.
 
 During the preparation of this manuscript, the author used Claude Opus 5.0, Opus 5.5, and GPT-6-Sol for exploratory discussion, computationally checking conjectures, and improving prose. All arguments presented above were independently verified by the author who assumes full responsibility for the mathematics in the paper.
 \begin{thebibliography}{10}
@@ -1224,22 +1221,18 @@ A.~Abreu and A.~Nigro.
 \newblock {\em J. Combin. Theory Ser. A}, 180:105407, 2021.
 \newblock \href{https://arxiv.org/abs/2006.00657}{arXiv:2006.00657}.
 
-\begingroup\color{red}% New reference since arXiv v1.
 \bibitem{lltflip}
-\rev{P.~Alexandersson and L.~Dai.}
-\newblock \rev{Flip classes and elementary expansions of vertical-strip LLT polynomials.}
-\newblock \rev{Preprint, 2026.}
-\newblock \rev{\href{https://arxiv.org/abs/2610.26294}{arXiv:2610.26294}.}
-\endgroup
+P.~Alexandersson and L.~Dai.
+\newblock Flip classes and elementary expansions of vertical-strip LLT polynomials.
+\newblock Preprint, 2026.
+\newblock \href{https://arxiv.org/abs/2610.26294}{arXiv:2610.26294}.
 
-\begingroup\color{red}% New reference since arXiv v1.
 \bibitem{lltcycles}
-\rev{P.~Alexandersson and G.~Panova.}
-\newblock \rev{{LLT} polynomials, chromatic quasisymmetric functions and graphs with cycles.}
-\newblock \rev{{\em Discrete Math.}, 341(12):3453--3482, 2018.}
-\newblock \rev{\href{https://doi.org/10.1016/j.disc.2018.09.001}{doi:10.1016/j.disc.2018.09.001}.}
-\newblock \rev{\href{https://arxiv.org/abs/1705.10353}{arXiv:1705.10353}.}
-\endgroup
+P.~Alexandersson and G.~Panova.
+\newblock {LLT} polynomials, chromatic quasisymmetric functions and graphs with cycles.
+\newblock {\em Discrete Math.}, 341(12):3453--3482, 2018.
+\newblock \href{https://doi.org/10.1016/j.disc.2018.09.001}{doi:10.1016/j.disc.2018.09.001}.
+\newblock \href{https://arxiv.org/abs/1705.10353}{arXiv:1705.10353}.
 
 \bibitem{graphtwin}
 E.~Banaian, K.~Celano, M.~Chang-Lee, L.~Colmenarejo, O.~Goff, J.~Kimble, L.~Kimpel, J.~Lentfer, J.~Liang, and S.~Sundaram.
@@ -1259,13 +1252,11 @@ S.~Clearman, M.~Hyatt, B.~Shelton, and M.~Skandera.
 \newblock {\em Electron. J. Combin.}, 23(2):P2.7, 2016.
 \newblock \href{https://arxiv.org/abs/1502.04633}{arXiv:1502.04633}.
 
-\begingroup\color{red}% New reference since arXiv v1.
 \bibitem{lean4}
-\rev{L.~de Moura and S.~Ullrich.}
-\newblock \rev{The {Lean} 4 theorem prover and programming language (system description).}
-\newblock \rev{In {\em Automated Deduction---CADE 28}, 2021.}
-\newblock \rev{\href{https://lean-lang.org/papers/lean4.pdf}{\nolinkurl{lean-lang.org/papers/lean4.pdf}}.}
-\endgroup
+L.~de Moura and S.~Ullrich.
+\newblock The {Lean} 4 theorem prover and programming language (system description).
+\newblock In {\em Automated Deduction---CADE 28}, 2021.
+\newblock \href{https://lean-lang.org/papers/lean4.pdf}{\nolinkurl{lean-lang.org/papers/lean4.pdf}}.
 
 \bibitem{chromquasidi}
 B.~Ellzey.
@@ -1285,13 +1276,11 @@ T.~Hikita.
 \newblock {\em J. Amer. Math. Soc.}, 2026.
 \newblock \href{https://arxiv.org/abs/2410.12758}{arXiv:2410.12758}.
 
-\begingroup\color{red}% New reference since arXiv v1.
 \bibitem{mathlib}
-\rev{The mathlib Community.}
-\newblock \rev{The {Lean} mathematical library.}
-\newblock \rev{In {\em Proceedings of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs}, 2020.}
-\newblock \rev{\href{https://doi.org/10.1145/3372885.3373824}{doi:10.1145/3372885.3373824}.}
-\endgroup
+The mathlib Community.
+\newblock The {Lean} mathematical library.
+\newblock In {\em Proceedings of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs}, 2020.
+\newblock \href{https://doi.org/10.1145/3372885.3373824}{doi:10.1145/3372885.3373824}.
 
 \bibitem{quantumiso}
 L.~Man\v{c}inska and D.~E. Roberson.
@@ -1299,13 +1288,11 @@ L.~Man\v{c}inska and D.~E. Roberson.
 \newblock In {\em 2020 IEEE 61st Annual Symposium on Foundations of Computer Science (FOCS)}, pages 661--672. IEEE Computer Society, 2020.
 \newblock Full version: \href{https://arxiv.org/abs/1910.06958v2}{arXiv:1910.06958v2}, 2019; numbering cited here refers to this version.
 
-\begingroup\color{red}% New reference since arXiv v1.
 \bibitem{openaichrom}
-\rev{OpenAI.}
-\newblock \rev{Elementary positivity of chromatic quasisymmetric functions.}
-\newblock \rev{Preprint, 2026.}
-\newblock \rev{\href{https://github.com/openai/math/blob/main/preprints/Elementary-Positivity-of-Chromatic-Quasisymmetric-Functions-September-24-2026/paper.pdf}{\nolinkurl{github.com/openai/math}}.}
-\endgroup
+OpenAI.
+\newblock Elementary positivity of chromatic quasisymmetric functions.
+\newblock Preprint, 2026.
+\newblock \href{https://github.com/openai/math/blob/main/preprints/Elementary-Positivity-of-Chromatic-Quasisymmetric-Functions-September-24-2026/paper.pdf}{\nolinkurl{github.com/openai/math}}.
 
 \bibitem{roberts}
 F.~S. Roberts.

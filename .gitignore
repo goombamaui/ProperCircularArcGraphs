@@ -3,12 +3,12 @@
 *.ilean
 *.trace
 .DS_Store
-paper/*.aux
-paper/*.log
-paper/*.out
+paper/**/*.aux
+paper/**/*.log
+paper/**/*.out
 
 __pycache__/
 *.py[cod]
-paper/*.fls
-paper/*.fdb_latexmk
-paper/*.synctex.gz
+paper/**/*.fls
+paper/**/*.fdb_latexmk
+paper/**/*.synctex.gz
