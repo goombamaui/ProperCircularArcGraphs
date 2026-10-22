@@ -12,7 +12,7 @@ The \rev macro also makes citations and hyperlinks within revisions red.
 New bibliography entries and their labels are red.
 The sections from Definitions through Tableau matrices of graphs are byte-for-byte
 identical to arXiv v1. Changes are confined to the abstract, introduction, further
-directions, bibliography, and the red-review macro.
+directions, acknowledgments, bibliography, and the red-review macro.
 
 The revisions credit Alexandersson and Panova for the circular chromatic conjecture
 (published Conjecture 5.2), cite their DOI 10.1016/j.disc.2018.09.001, discuss the

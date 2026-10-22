@@ -70,7 +70,16 @@
  
  
  Similarly, one can extend the tableau formulas to the
-@@ -1206,6 +1217,23 @@
+@@ -1197,6 +1208,8 @@
+ account for repeated colors on the marked vertices. This could perhaps extend Hikita's tableau method to provide a simpler formula for the Tutte symmetric function of NUIGs.
+ 
+ \section{Acknowledgments}
++\rev{The author thanks Per Alexandersson for pointing out the related circular $e$-positivity conjectures and the recent work on circular LLT polynomials.}
++
+ During the preparation of this manuscript, the author used Claude Opus 5.0, Opus 5.5, and GPT-6-Sol for exploratory discussion, computationally checking conjectures, and improving prose. All arguments presented above were independently verified by the author who assumes full responsibility for the mathematics in the paper.
+ \begin{thebibliography}{10}
+ 
+@@ -1206,6 +1219,23 @@
  \newblock {\em J. Combin. Theory Ser. A}, 180:105407, 2021.
  \newblock \href{https://arxiv.org/abs/2006.00657}{arXiv:2006.00657}.
  
@@ -94,7 +103,7 @@
  \bibitem{graphtwin}
  E.~Banaian, K.~Celano, M.~Chang-Lee, L.~Colmenarejo, O.~Goff, J.~Kimble, L.~Kimpel, J.~Lentfer, J.~Liang, and S.~Sundaram.
  \newblock The $e$-positivity of the chromatic symmetric function for twinned paths and cycles.
-@@ -1224,6 +1252,14 @@
+@@ -1224,6 +1254,14 @@
  \newblock {\em Electron. J. Combin.}, 23(2):P2.7, 2016.
  \newblock \href{https://arxiv.org/abs/1502.04633}{arXiv:1502.04633}.
  
@@ -109,7 +118,7 @@
  \bibitem{chromquasidi}
  B.~Ellzey.
  \newblock A directed graph generalization of chromatic quasisymmetric functions.
-@@ -1242,12 +1278,28 @@
+@@ -1242,12 +1280,28 @@
  \newblock {\em J. Amer. Math. Soc.}, 2026.
  \newblock \href{https://arxiv.org/abs/2410.12758}{arXiv:2410.12758}.
  
