@@ -7,7 +7,7 @@ SHA-256 of the original TeX: 6f371daca6116fa497600115abec9b4746a14579e80742d2096
 The baseline is preserved unchanged in arxiv-v1/.
 The accompanying .diff compares the downloaded source with the revised manuscript.
 
-Every added or rewritten passage is marked in the TeX using \rev{...}.
+In the full-review copy, every added or rewritten passage is marked using \rev{...}.
 The \rev macro also makes citations and hyperlinks within revisions red.
 New bibliography entries and their labels are red.
 The sections from Definitions through Tableau matrices of graphs are byte-for-byte
@@ -22,8 +22,10 @@ They also retain the Lean formalization note and the existing update on the natu
 unit interval case. Statements of positivity do not assert unimodality.
 
 The review PDF was rebuilt successfully, with no LaTeX warnings or bad boxes.
-The source audit found no added or replacement tokens outside red revision regions
-in the document body (after excluding wholly red new bibliography entries).
+The initial full-red source audit found no added or replacement tokens outside red
+revision regions in the document body (excluding wholly red new bibliography entries).
 
-Local PAPER.tex and PAPER_v2.tex and repository paper/ProperCircularArcGraphs.tex
-have identical contents, as do their compiled PDFs.
+Local PAPER.tex is the active editing copy; the author is accepting revisions by
+removing red markup and may edit the wording. PAPER_v2.tex and repository
+paper/ProperCircularArcGraphs.tex retain the full review markup. Their PDFs are
+compiled from the corresponding sources.
