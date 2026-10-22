@@ -1,4 +1,4 @@
-# ProperCircularArc
+# ProperCircularArcGraphs
 
 Lean 4 formalization accompanying Aarush Vailaya,
 *Proper circular arc graphs are e-positive* ([manuscript](paper/ProperCircularArcGraphs.pdf)).
@@ -29,10 +29,15 @@ special case it gives a new proof that natural unit interval graphs are `e`-posi
 | Theorem `pca-formula` | explicit tableau formula for `X_Γ` | [`pca_formula`, `pca_formula'`](ProperCircularArc/Hikita.lean), [`pca_formula_tableaux`](ProperCircularArc/Tableaux.lean) |
 | Theorem `hikita` (`q = 1`) | `X_G = ∑_T w(T ∣ ∅, G)` | [`hikita_weight`](ProperCircularArc/Hikita.lean), [`hikita_tableaux`](ProperCircularArc/Tableaux.lean) |
 
-`e`-positivity is stated for every finite alphabet `x_1, …, x_N`: the chromatic symmetric
-function `X(x_1, …, x_N)` equals `P(e_1, …, e_N)` for a polynomial `P` with nonnegative
-rational coefficients. The colourings and the tableau side are defined independently
-and proved to agree.
+The completed additions are in [Infinite.lean](ProperCircularArc/Infinite.lean),
+[Gluing.lean](ProperCircularArc/Gluing.lean), [Probability.lean](ProperCircularArc/Probability.lean),
+[Examples.lean](ProperCircularArc/Examples.lean), and
+[ExamplesMatrices.lean](ProperCircularArc/ExamplesMatrices.lean).
+
+`e`-positivity is proved in the ring of symmetric functions, represented by polynomials in
+formal elementary generators. One polynomial with nonnegative rational coefficients
+specializes to the chromatic symmetric function in every finite alphabet. The colourings
+and the tableau side are defined independently and proved to agree.
 
 [Verification.lean](Verification.lean) prints the axioms of the main theorems. All of them
 depend only on `propext`, `Classical.choice` and `Quot.sound`; the project uses no `sorry` and
@@ -40,10 +45,9 @@ no custom axioms.
 
 ## Status
 
-All numbered results of the paper are formalized except the worked examples. The
-statements are proved for every finite alphabet. The remaining differences from the paper
-(the lift to infinitely many variables, Lemma `tableau-mult` for single cliques, and Hikita's
-probabilities) are listed in [docs/STATUS.md](docs/STATUS.md).
+The previously listed gaps are closed: the lift to infinitely many variables, products of
+arbitrary marked NUIGs, Hikita's probability formula, and the worked CSF and matrix examples.
+See [docs/STATUS.md](docs/STATUS.md) for the precise representations and theorem names.
 
 ## Build
 

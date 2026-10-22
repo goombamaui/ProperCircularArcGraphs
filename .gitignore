@@ -6,3 +6,9 @@
 paper/*.aux
 paper/*.log
 paper/*.out
+
+__pycache__/
+*.py[cod]
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz

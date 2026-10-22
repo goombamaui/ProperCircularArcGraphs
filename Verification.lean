@@ -66,3 +66,33 @@ Every theorem below should depend only on `propext`, `Classical.choice` and `Quo
 #print axioms ProperCircularArc.pca_formula_tableaux
 #print axioms ProperCircularArc.hikita_tableaux
 #print axioms ProperCircularArc.tableau_nuig
+
+-- Remaining paper statements: stable alphabets, arbitrary graph products, and probabilities.
+#print axioms ProperCircularArc.stable_epositive
+#print axioms ProperCircularArc.chromSymInf_epositive
+#print axioms ProperCircularArc.nuig_epositive_infinite
+#print axioms ProperCircularArc.pca_graph_epositive_infinite
+#print axioms ProperCircularArc.Word.adj_comp
+#print axioms ProperCircularArc.Word.comp_overlap
+#print axioms ProperCircularArc.MarkedNUIG.tableau_mult
+#print axioms ProperCircularArc.weight_pr
+#print axioms ProperCircularArc.weight_pr_rows
+#print axioms ProperCircularArc.hikita_probability_tableaux
+#print axioms ProperCircularArc.hikita_probability_rows
+
+-- Exact worked examples and the graphs/words used by their certificates.
+#print axioms ProperCircularArc.weightedCSF_delete_contract
+#print axioms ProperCircularArc.Examples.path3_csf
+#print axioms ProperCircularArc.Examples.path2_csf
+#print axioms ProperCircularArc.Examples.six_csf
+#print axioms ProperCircularArc.Examples.seven_csf
+#print axioms ProperCircularArc.Examples.pathWord_graph
+#print axioms ProperCircularArc.Examples.sixWord_trace
+#print axioms ProperCircularArc.Examples.sevenWord_graph
+#print axioms ProperCircularArc.Examples.six_tableau
+#print axioms ProperCircularArc.Examples.seven_tableau
+#print axioms ProperCircularArc.Examples.path_step_matrix
+#print axioms ProperCircularArc.Examples.path_square_matrix
+#print axioms ProperCircularArc.Examples.path_U_entry
+#print axioms ProperCircularArc.Examples.path_U_matrix
+#print axioms ProperCircularArc.specializeSymm_jointly_injective

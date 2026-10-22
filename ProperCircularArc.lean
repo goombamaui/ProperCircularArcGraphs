@@ -26,3 +26,8 @@ import ProperCircularArc.PCATrace
 import ProperCircularArc.Arcs
 import ProperCircularArc.Hikita
 import ProperCircularArc.Tableaux
+import ProperCircularArc.Infinite
+import ProperCircularArc.Gluing
+import ProperCircularArc.Probability
+import ProperCircularArc.Examples
+import ProperCircularArc.ExamplesMatrices

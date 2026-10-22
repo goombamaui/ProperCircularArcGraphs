@@ -106,3 +106,45 @@ by induction on the word. Adding a vertex adjacent to the marked vertices multip
 because assignments that put two adjacent vertices in the same column have weight `0`.
 [Tableaux.lean](../ProperCircularArc/Tableaux.lean) shows that assignments of nonzero weight are
 genuine tableau builds, which is the remark after Definition `hikita-rule`.
+
+
+## Stable alphabets and symmetric functions
+
+[Infinite.lean](../ProperCircularArc/Infinite.lean) defines the ring of symmetric functions
+as `Symm = ℚ[E₁,E₂,…]`, using zero-based indices for the generators. Restriction of colour
+variables commutes with both the chromatic sum and the elementary symmetric polynomials.
+The elementary expansion of a homogeneous CSF is weighted homogeneous, with `weight E_j = j`.
+Thus a CSF of degree `n` uses only `E₁,…,E_n`. Algebraic independence in `n` variables then
+identifies the expansion in every larger alphabet, and restriction gives every smaller
+alphabet, including the empty one. This proves `stable_epositive` and the infinite-alphabet
+positivity theorems. The specialization maps are jointly injective.
+
+## General marked products
+
+[Gluing.lean](../ProperCircularArc/Gluing.lean) defines `MarkedNUIG` and its product.
+The word realization of a graph is supplied by the existing `word_of_nuig` theorem.
+Composition identifies the inputs of the second word with the outputs of the first;
+`comp_overlap`, `comp_cover`, and `adj_comp` prove the vertex and edge description of this
+clique gluing. `matrix_eq_word` transports the independently defined Hikita matrix to its
+word, and `MarkedNUIG.tableau_mult` proves Lemma `tableau-mult` for arbitrary factors.
+
+## Probability normalization of weights
+
+[Probability.lean](../ProperCircularArc/Probability.lean) defines `hprob` by the paper's
+product `∏ A(y|σ)/y`. A column of height `h_y` contributes `(y e_y/e_{y-1})^{h_y}` to the
+shape potential. Each newly added box multiplies this potential by `y e_y/e_{y-1}`,
+and along a row the product telescopes to `λ!e_λ`. `weight_pr_rows` proves Equation
+`weight-pr` for arbitrary initial and final shapes. `hikita_probability_tableaux` and
+`hikita_probability_rows` give the probability form of Hikita's theorem.
+
+## Exact example certificates
+
+[Examples.lean](../ProperCircularArc/Examples.lean) checks the graph words and all four
+CSF polynomials (`P₃`, `P₂`, the six-vertex PCA graph, and the seven-vertex NUIG) in every
+alphabet. [ExamplesMatrices.lean](../ProperCircularArc/ExamplesMatrices.lean) checks the
+three displayed matrices in Example `p3`. The CSF computations use the general weighted
+deletion-contraction identity in [DeletionContraction.lean](../ProperCircularArc/DeletionContraction.lean).
+The generated certificates in [ExamplesCertificates.lean](../ProperCircularArc/ExamplesCertificates.lean)
+are ordinary Lean proofs using deletion-contraction, finite decisions, and `ring`.
+They can be regenerated with `python3 scripts/generate_examples.py` (requires Sympy);
+Python and Sympy are not needed to build or verify the Lean proofs.
