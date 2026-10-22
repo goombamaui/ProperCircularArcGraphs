@@ -17,15 +17,16 @@
  
  
  \end{abstract}
-@@ -73,12 +74,17 @@
+@@ -73,12 +74,19 @@
  Shareshian and Wachs introduced the chromatic quasisymmetric function
  $X_G(\bm x;q)$, showed that it is symmetric for natural unit interval
  graphs, and conjectured that its $e$-coefficients are polynomials in $q$
 -with nonnegative coefficients \cite{chromposquasi}. Ellzey generalized
-+with nonnegative coefficients \cite{chromposquasi}\rev{, which was recently proved \cite[Theorem 1.1]{openaichrom}}. Ellzey generalized
++with nonnegative coefficients \cite{chromposquasi}\rev{, which was recently proved by OpenAI \cite[Theorem 1.1]{openaichrom}}. Ellzey generalized
  this function to directed graphs and conjectured the same positivity for
--proper circular arc digraphs \cite[Conjecture 1.4]{chromquasidi}.
-+proper circular arc digraphs \cite[Conjecture 1.4]{chromquasidi}\rev{, and the same conjecture, with unimodality, appears in \cite[Conjecture 5.2]{lltcycles}}.
+ proper circular arc digraphs \cite[Conjecture 1.4]{chromquasidi}.
++\rev{Alexandersson and Panova independently conjectured the same positivity,
++together with unimodality \cite[Conjecture 5.2]{lltcycles}.}
  At $q=1$, this conjectures that every proper circular arc graph is $e$-positive.
  Several families built from cycles are known to be $e$-positive
 -\cite{graphtwin,cyclechains,cyclechordsepositive}, but the general conjecture remains unsolved.
@@ -38,7 +39,7 @@
  
  The chromatic symmetric function is multiplicative over connected
  components, but gluing graphs at a vertex does not correspond to
-@@ -91,8 +97,8 @@
+@@ -91,8 +99,8 @@
  the marked vertices, and $e$-positive tableau matrices, which record the columns of
  specified boxes in Hikita's tableau. We show these matrices are related by a change of basis and satisfy the same multiplication and trace properties. Since every proper circular arc graph can be obtained by identifying the first and last $k$ vertices of a natural unit interval graph, the tableau
  trace then proves that every proper circular arc graph is $e$-positive
@@ -49,7 +50,7 @@
  
  Moreover, the tableau matrices give an explicit formula for the chromatic symmetric function of a proper circular arc graph (Theorem~\ref{thm:pca-formula}). We cut the circle to obtain a natural unit interval graph, place the first $k$ vertices at the ends of rows of lengths $j_1,\dots,j_k$, build the rest of the graph with Hikita's rule, and keep the tableaux whose last $k$ vertices return to the columns $j_1,\dots,j_k$. Unlike Hikita's formula, this sums over one starting tableau for each choice of $j$, so the number of terms grows exponentially in $k$, but every term is explicit. In relating the two matrices, we also provide a new proof
  of the Stanley--Stembridge conjecture.
-@@ -100,6 +106,7 @@
+@@ -100,6 +108,7 @@
  More specifically, Section~\ref{section:defs} provides definitions, Section~\ref{section:color} describes color matrices and their multiplication and trace properties, Section~\ref{section:tableau}
  defines the tableau operators and states the main theorem, which is proved in Section~\ref{section:proof}. Section~\ref{section:trace} proves
  the trace formula for tableau matrices and establishes $e$-positivity. Finally, Section~\ref{section:extra} describes the tableau matrices using Hikita's rule and proves the following explicit formula.
@@ -57,7 +58,7 @@
  
  \begin{theorem}\label{thm:pca-formula}
  Let $\Gamma$ be a proper circular arc graph on $n$ vertices, obtained from
-@@ -1187,7 +1194,11 @@
+@@ -1187,7 +1196,11 @@
  single-vertex constructions in \cite{singlegluing}.
  
   
@@ -70,7 +71,7 @@
  
  
  Similarly, one can extend the tableau formulas to the
-@@ -1197,6 +1208,8 @@
+@@ -1197,6 +1210,8 @@
  account for repeated colors on the marked vertices. This could perhaps extend Hikita's tableau method to provide a simpler formula for the Tutte symmetric function of NUIGs.
  
  \section{Acknowledgments}
@@ -79,7 +80,7 @@
  During the preparation of this manuscript, the author used Claude Opus 5.0, Opus 5.5, and GPT-6-Sol for exploratory discussion, computationally checking conjectures, and improving prose. All arguments presented above were independently verified by the author who assumes full responsibility for the mathematics in the paper.
  \begin{thebibliography}{10}
  
-@@ -1206,6 +1219,23 @@
+@@ -1206,6 +1221,23 @@
  \newblock {\em J. Combin. Theory Ser. A}, 180:105407, 2021.
  \newblock \href{https://arxiv.org/abs/2006.00657}{arXiv:2006.00657}.
  
@@ -103,7 +104,7 @@
  \bibitem{graphtwin}
  E.~Banaian, K.~Celano, M.~Chang-Lee, L.~Colmenarejo, O.~Goff, J.~Kimble, L.~Kimpel, J.~Lentfer, J.~Liang, and S.~Sundaram.
  \newblock The $e$-positivity of the chromatic symmetric function for twinned paths and cycles.
-@@ -1224,6 +1254,14 @@
+@@ -1224,6 +1256,14 @@
  \newblock {\em Electron. J. Combin.}, 23(2):P2.7, 2016.
  \newblock \href{https://arxiv.org/abs/1502.04633}{arXiv:1502.04633}.
  
@@ -118,7 +119,7 @@
  \bibitem{chromquasidi}
  B.~Ellzey.
  \newblock A directed graph generalization of chromatic quasisymmetric functions.
-@@ -1242,12 +1280,28 @@
+@@ -1242,12 +1282,28 @@
  \newblock {\em J. Amer. Math. Soc.}, 2026.
  \newblock \href{https://arxiv.org/abs/2410.12758}{arXiv:2410.12758}.
  
